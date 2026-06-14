@@ -1,0 +1,120 @@
+import React, { useState } from 'react';
+import { Plus, Edit2, Trash2, Image as ImageIcon } from 'lucide-react';
+
+export default function AdminCourses() {
+  const [courses, setCourses] = useState([
+    { id: 1, title: 'دوره جامع باریستا', instructor: 'علی اصغری', date: '۱۵ مهر ۱۴۰۳', capacity: 15, enrolled: 12, price: 8500000, status: 'Active' },
+    { id: 2, title: 'آرت لاته پیشرفته', instructor: 'سارا کریمی', date: '۲۰ آبان ۱۴۰۳', capacity: 10, enrolled: 10, price: 6200000, status: 'Full' },
+  ]);
+
+  const [isAdding, setIsAdding] = useState(false);
+
+  return (
+    <div className="p-8 h-full overflow-y-auto">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 pb-6 border-b border-brand-primary/10 gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-brand-primary mb-2 font-serif">مدیریت دوره‌ها</h2>
+          <p className="text-brand-muted/60 text-sm">افزودن، ویرایش و حذف دوره‌های آموزشی آکادمی</p>
+        </div>
+        <button 
+          onClick={() => setIsAdding(!isAdding)}
+          className="flex items-center justify-center gap-2 bg-brand-primary text-brand-gold px-6 py-3 rounded-xl text-sm font-bold shadow-lg shadow-brand-primary/20 hover:bg-brand-gold hover:text-brand-primary transition-all duration-300 w-full lg:w-auto"
+        >
+          <Plus size={18} />
+          <span>افزودن دوره جدید</span>
+        </button>
+      </div>
+
+      {isAdding && (
+        <div className="bg-white border-2 border-brand-light p-8 rounded-3xl shadow-xl shadow-brand-primary/5 mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
+          <h3 className="text-lg font-bold text-brand-primary mb-8 font-serif border-b border-brand-light pb-4">ثبت دوره جدید</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">عنوان دوره</label>
+              <input type="text" className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent" placeholder="مثال: دوره جامع رست قهوه" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">مدرس</label>
+              <input type="text" className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent" placeholder="نام مدرس" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">تاریخ شروع</label>
+              <input type="text" className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent" placeholder="مثال: ۱۵ دی ۱۴۰۳" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">قیمت (تومان)</label>
+              <input type="number" className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent font-en text-left" placeholder="0" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">ظرفیت</label>
+              <input type="number" className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent font-en text-left" placeholder="تعداد نفرات" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-brand-muted mb-2">پوستر / تصویر دوره</label>
+              <div className="w-full border-2 border-dashed border-brand-primary/20 rounded-xl p-3.5 flex justify-center items-center gap-2 cursor-pointer hover:bg-brand-primary/5 hover:border-brand-primary/40 transition-colors group">
+                 <ImageIcon size={18} className="text-brand-primary/40 group-hover:text-brand-primary transition-colors" />
+                 <span className="text-sm font-bold text-brand-muted/70 group-hover:text-brand-primary transition-colors">انتخاب تصویر پوستر</span>
+              </div>
+            </div>
+            <div className="col-span-full">
+              <label className="block text-sm font-bold text-brand-muted mb-2">توضیحات دوره</label>
+              <textarea rows={4} className="w-full border-2 border-brand-light rounded-xl p-3.5 text-sm focus:outline-none focus:border-brand-gold focus:bg-brand-light/20 transition-all bg-transparent resize-none leading-relaxed" placeholder="توضیحات کامل درباره دوره..."></textarea>
+            </div>
+          </div>
+          <div className="mt-8 flex justify-end gap-3 pt-6 border-t border-brand-light">
+            <button typeof="button" onClick={() => setIsAdding(false)} className="px-6 py-3 border border-brand-primary/20 text-brand-muted rounded-xl text-sm font-bold hover:bg-brand-light transition-colors">انصراف</button>
+            <button className="px-8 py-3 bg-brand-primary text-brand-gold rounded-xl text-sm font-bold shadow-lg shadow-brand-primary/20 hover:shadow-brand-gold/20 hover:bg-brand-gold hover:text-brand-primary transition-all duration-300">ذخیره دوره</button>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white border-2 border-brand-light rounded-3xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto p-2">
+          <table className="w-full text-right text-sm">
+            <thead className="text-brand-primary/70 font-bold text-xs uppercase tracking-widest px-4 border-b border-brand-light">
+              <tr>
+                <th className="p-4 py-5">شناسه</th>
+                <th className="p-4 py-5">عنوان دوره</th>
+                <th className="p-4 py-5">مدرس</th>
+                <th className="p-4 py-5">تاریخ شروع</th>
+                <th className="p-4 py-5">ظرفیت / ثبت‌نام</th>
+                <th className="p-4 py-5">قیمت</th>
+                <th className="p-4 py-5">وضعیت</th>
+                <th className="p-4 py-5">عملیات</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-brand-light text-brand-muted">
+              {courses.map((course) => (
+                <tr key={course.id} className="hover:bg-brand-light/30 transition-colors group">
+                  <td className="p-4 font-en text-xs font-bold text-brand-muted/50">{course.id}</td>
+                  <td className="p-4 font-bold text-[15px] text-brand-primary">{course.title}</td>
+                  <td className="p-4 font-medium">{course.instructor}</td>
+                  <td className="p-4 font-en">{course.date}</td>
+                  <td className="p-4 font-en font-bold">
+                    <span className="text-brand-primary">{course.enrolled}</span> <span className="text-brand-muted/40">/ {course.capacity}</span>
+                  </td>
+                  <td className="p-4 font-en font-bold text-brand-primary">{course.price.toLocaleString("fa-IR")} تومان</td>
+                  <td className="p-4">
+                    <span className={`px-2.5 py-1 rounded-md text-[10px] font-en uppercase tracking-wider font-bold shadow-sm ${course.status === 'Active' ? 'bg-secondary/10 text-secondary' : 'bg-brand-gold/10 text-brand-gold'}`}>
+                      {course.status}
+                    </span>
+                  </td>
+                  <td className="p-4">
+                    <div className="flex items-center gap-3">
+                      <button className="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:bg-secondary hover:text-white transition-all shadow-sm border border-secondary/10" title="ویرایش">
+                        <Edit2 size={14} />
+                      </button>
+                      <button className="w-8 h-8 rounded-lg flex items-center justify-center text-semantic-error hover:bg-semantic-error hover:text-white transition-all shadow-sm border border-semantic-error/10" title="حذف">
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with personal info, role, and wallet balance.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "mobile": { "type": "string" },
+        "email": { "type": "string", "description": "Email address fetched from auth" },
+        "address": { "type": "string" },
+        "walletBalance": { "type": "number", "description": "Balance in TPT" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string" },
+        "cart": {
+          "type": "array",
+          "items": { "type": "object" },
+          "description": "Array of cart items"
+        }
+      },
+      "required": ["name", "email", "role", "createdAt"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Academy course details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "instructor": { "type": "string" },
+        "date": { "type": "string" },
+        "price": { "type": "number" },
+        "capacity": { "type": "number" },
+        "enrolled": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Completed", "Upcoming"] },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "instructor", "price", "capacity", "status", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Shop product details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "number" },
+        "inStock": { "type": "boolean" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "category", "price", "stock", "inStock", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "User purchase order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "customer": { "type": "string" },
+        "mobile": { "type": "string" },
+        "amount": { "type": "number" },
+        "items": { "type": "array" },
+        "status": { "type": "string", "enum": ["Processing", "Shipped", "Delivered", "Cancelled"] },
+        "date": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "amount", "items", "status", "createdAt"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "User course enrollment",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "courseTitle": { "type": "string" },
+        "status": { "type": "string", "enum": ["Confirmed", "Pending"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "courseId", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles. The userId matches Firebase Auth UID."
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/Course" },
+      "description": "Stores academy courses."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Stores shop products."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Stores user orders."
+    },
+    "/enrollments/{enrollmentId}": {
+      "schema": { "$ref": "#/entities/Enrollment" },
+      "description": "Stores user course enrollments."
+    }
+  }
+}

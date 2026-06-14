@@ -1,0 +1,8 @@
+{
+  "name": "Compass Group Platform",
+  "description": "Modern Architecture in the Art of Hospitality - Course and Ecommerce Platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
